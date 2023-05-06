@@ -8,6 +8,7 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
+import { AddressField } from './AddressField';
 
 type FormValues = {
   propertyType: string;
@@ -20,7 +21,8 @@ type FormValues = {
 };
 
 export function RentalForm() {
-  const { register, handleSubmit, formState } = useForm<FormValues>();
+  const { register, handleSubmit, formState, setValue, getValues } =
+    useForm<FormValues>();
   const [submitted, setSubmitted] = useState(false);
   const { errors } = formState;
   const onSubmit = (data: FormValues) => {
@@ -76,13 +78,9 @@ export function RentalForm() {
         margin="normal"
       />
 
-      <TextField
-        {...register('address', { required: true })}
-        label="Адрес и город"
-        error={!!errors.address}
-        helperText={errors.address ? 'Это поле обязательно' : null}
-        fullWidth
-        margin="normal"
+      <AddressField
+        value={getValues('address')}
+        setValue={(value) => setValue('address', value)}
       />
 
       <TextField
